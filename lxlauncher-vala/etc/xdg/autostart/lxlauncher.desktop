@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=LxLauncher
+Exec=lxlauncher
+NoDisplay=true
+

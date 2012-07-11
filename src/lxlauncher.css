@@ -1,0 +1,32 @@
+#lxlauncher-label {
+    color: #dbdbdb;
+}
+
+#lxlauncher-viewport {
+    background-color: #000000;
+}
+
+#lxlauncher-button {
+    border-color: transparent;
+    border-style: none;
+}
+
+#lxlauncher-button:hover {
+    border-radius: 10;
+    background-image: -gtk-gradient (linear,
+                                     left top, 
+                                     left bottom,
+                                     from (#000000),
+                                     to (#ffffff));
+}
+
+#lxlauncher-button:hover:active {
+    border-radius: 10;
+    border-color: transparent;
+    color: #ffffff;
+    background-image: -gtk-gradient (linear,
+                                     left top, 
+                                     left bottom,
+                                     from (#606060),
+                                     to (#707070));
+}

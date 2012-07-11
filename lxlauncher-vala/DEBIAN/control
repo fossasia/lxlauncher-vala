@@ -1,0 +1,15 @@
+Package:lxlauncher-vala
+Version: 1.0-1
+Architecture: i386
+Maintainer: x-mario <vanhonit@gmail.com>
+Installed-Size: 40
+Section: x11
+Priority: extra
+Depends: libgee2(>=0.5),libmenu-cache1(>=0.3),libgtk-3-0(>=3.4)
+Homepage: http://packages.x-mario.com/binary
+Description:Easy-Mode launcher for subnotebook like EeePC
+ LXLauncher-vala create by Stephen Smally and this version edit by Hon Nguyen<vanhonit@gmail.com> .
+ .
+ It is standard-compliant and desktop-independent. It follows
+ freedesktop.org specs, so newly added applications will automatically
+ show up in the launcher, and vice versa for the removed ones.

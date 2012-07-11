@@ -1,0 +1,4 @@
+To try lxlauncher, type:
+./compile-project.sh
+lxlauncher will be compiled and launched.
+at the moment there is no build system.
