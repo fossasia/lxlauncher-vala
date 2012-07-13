@@ -6,6 +6,7 @@ namespace LxLauncher.Widgets {
     public class LauncherGrid : Box {
         public Launcher launcher_child;
         private Box chil;
+        private ScrolledWindow scroll;
         private int n_rows;
         private int n_columns;
         public int children { get; private set; }
@@ -13,9 +14,12 @@ namespace LxLauncher.Widgets {
         public void append_launcher (App item) {            
             if (children == n_columns) {
                 children = 0;
-                chil = new Box(Orientation.HORIZONTAL, 5);
-                chil.homogeneous = true;
-                pack_start(chil, false, false, 0);
+                chil = new Box(Orientation.HORIZONTAL, 5);                
+				
+                chil.homogeneous = true;                
+                pack_end(chil, true, false, 0);
+                //scroll.add(chil);
+                //pack_start(scroll, false, false, 0);
                 n_rows++;
             }
             
@@ -43,8 +47,12 @@ namespace LxLauncher.Widgets {
             n_rows = 1;
             children = 0;
             chil = new Box(Orientation.HORIZONTAL, 5);
+            //scroll = new ScrolledWindow(null,null);
             chil.homogeneous = true;
+            valign = Gtk.Align.START;
             pack_start(chil, false, false, 0);
+            //scroll.add(chil);
+            //pack_start(scroll, false, false, 0);
         }
     }
 }

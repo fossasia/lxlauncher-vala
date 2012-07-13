@@ -67,7 +67,7 @@ namespace LxLauncher.Main {
             button_table = new Notebook();
             button_table.show_tabs = false;
             button_table.show_border = false;
-            
+            button_table.scrollable = true;
             //searchview = new SearchView();            
             
             tab_box_vertical.pack_start(tab_box, true, false, 0);
@@ -178,7 +178,12 @@ namespace LxLauncher.Main {
             table.complete_grid();
             
             Box table_box = new Box(Orientation.VERTICAL, 0);
-            table_box.pack_start(table, false, false, 0);
+            var scroll = new ScrolledWindow(null,null);           
+            scroll.set_placement(Gtk.CornerType.TOP_LEFT);
+            scroll.add_with_viewport(table);            
+            table_box.pack_start(scroll, true, true, 0);
+           
+            //table_box.pack_start(table, false, false, 0);
             
             button_table.append_page(table_box, null);
             table_box.show_all();
