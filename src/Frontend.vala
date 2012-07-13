@@ -178,7 +178,8 @@ namespace LxLauncher.Main {
             table.complete_grid();
             
             Box table_box = new Box(Orientation.VERTICAL, 0);
-            var scroll = new ScrolledWindow(null,null);           
+            var scroll = new ScrolledWindow(null,null);   
+            //var viewport = new Viewport();        
             scroll.set_placement(Gtk.CornerType.TOP_LEFT);
             scroll.add_with_viewport(table);            
             table_box.pack_start(scroll, true, true, 0);

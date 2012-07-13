@@ -92,7 +92,10 @@ namespace LxLauncher.Config {
 			if (font_family != "") tmp+="GtkWindow#lxlauncher {font:"+font_family+";}\n";
 			//if (font_size != "") tmp+="GtkWindow#lxlauncher {font-size:"+font_size+";}\n";
 			if (font_color != "") tmp+="GtkWidget {color:"+font_color+";}\n";
+			
 			if (tab_bgcolor != "") tmp+="GtkWindow#lxlauncher {background-color:"+tab_bgcolor+";}\n";
+			//tmp+="\nGtkScrolledWindow, GtkViewport{background:url('/home/x-mario/bg.png') repeat;}";
+			tmp+="\nGtkViewport{background-color:rgba(255,255,255,0);}";
 			return tmp;
 			}
         private string[] load_favourites_launchers () {
