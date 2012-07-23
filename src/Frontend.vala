@@ -277,10 +277,10 @@ namespace LxLauncher.Main {
 			stylecontext.reset_widgets(scr);
 			stylecontext.add_provider_for_screen(scr,css_style, 800);
 			//stderr.printf(settings_manager.css_style);
-			css_style.load_from_data(settings_manager.css_style,-1);	
+			try{css_style.load_from_data(settings_manager.css_style,-1);	}catch(Error e){}
 			}       
         public Frontend () {
-			try{			
+				
             apps_db = new AppDatabase(settings_manager.menu_path);
             set_title("LxLauncher");                       
             set_position(WindowPosition.CENTER);
@@ -303,9 +303,7 @@ namespace LxLauncher.Main {
 			// searchview.set_visible(false);                              
             settings_manager.notify.connect(settings_changed_manager);
             apps_db.cache.add_reload_notify((Func) setup_launchers);
-           }catch(Error e){
-			   //stderr.printf ("Error: %s\n", e.message);
-		   }
+          
         }        
     }
     public void init(){

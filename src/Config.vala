@@ -176,7 +176,7 @@ namespace LxLauncher.Config {
             return true;
         }        
         private string init_file () {
-			if (menu_path == "")  config.set_string("General", "menu", "/etc/xdg/lubuntu/menus/lxde-applications.menu");  else
+			if (menu_path == "")  config.set_string("General", "menu", "/etc/xdg/lubuntu/menus/lxgames-applications.menu");  else
 				config.set_string("General", "menu", menu_path);
             config.set_integer("Interface", "columns", 9);            
             if (option_view_tabs == -1) config.set_integer("Interface","view",2);else config.set_integer("Interface","view",option_view_tabs);
@@ -223,7 +223,7 @@ namespace LxLauncher.Config {
             icon_size = 6;//load_icon_size();
             columns = load_n_column();
             option_view_tabs = load_option_view();
-            bg_option = load_bg_option();
+            //bg_option = load_bg_option();
             //favourites_pos = load_favourites_pos();
             css_style = init_css_style();//"GtkWindow#lxlauncher {background-image:url('/home/honnguyen/.config/lxlauncher/background.png');}";            
             string[] raw_launchers = load_favourites_launchers();
@@ -275,8 +275,10 @@ namespace LxLauncher.Config {
             screen_height = screen.get_height();
             screen_width = screen.get_width();
             background = load_background();
+            //stdout.printf(background);
+            background = "/etc/xdg/lxlauncher/background.png";
             option_view_tabs = load_option_view();
-            bg_option = load_bg_option();
+            //bg_option = load_bg_option();
             font_family = "";            
             font_color = "";            
             config = new KeyFile();

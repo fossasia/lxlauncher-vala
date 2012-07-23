@@ -5,8 +5,7 @@ using LxLauncher.Backend;
 namespace LxLauncher.Widgets {
     public class LauncherGrid : Box {
         public Launcher launcher_child;
-        private Box chil;
-        private ScrolledWindow scroll;
+        private Box chil;        
         private int n_rows;
         private int n_columns;
         public int children { get; private set; }

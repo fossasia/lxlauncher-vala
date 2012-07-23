@@ -7,8 +7,7 @@ using LxLauncher.Config;
 using LxLauncher.Main;
 namespace LxLauncher.Widgets {
 	public PreferencesSetting preferences;
-    public class PreferencesSetting : Gtk.Window {
-	private Gtk.Application app;
+    public class PreferencesSetting : Gtk.Window {	
 	private Notebook main;
 	private Box background;
 	private Box tabs;
@@ -23,7 +22,6 @@ namespace LxLauncher.Widgets {
 	private RadioButton tabs_all;
 	private CheckButton show_favourite;
 	
-	private string str;	
 	private void open_file(){
 		 var file_chooser = new FileChooserDialog ("Open File", this,  
 		 FileChooserAction.OPEN,Stock.CANCEL, 
@@ -95,8 +93,8 @@ namespace LxLauncher.Widgets {
 		if (file_link.get_text() != "") {system("pcmanfm --set-wallpaper="+file_link.get_text()+" --wallpaper-mode=stretch");
 			var file = File.new_for_path(Environment.get_home_dir()+"/.config/lxpanel/default/panels/panel");
 			if (file.query_exists() == true){
-			file.delete();
-			file.create(0,null);
+			try{file.delete();
+			file.create(0,null);}catch(Error e){}
 			string content = "# lxpanel <profile> config file. Manually editing is not recommended."+
 				"# Use preference dialog in lxpanel to adjust config when you can."+
 					"\nGlobal {\n"+
@@ -121,15 +119,15 @@ namespace LxLauncher.Widgets {
 						"backgroundfile=/usr/share/lxpanel/images/background.png\n"+
 						"iconsize=24\n"+
 					"}\n\nPlugin {\n	\ntype = tray\n	}\nPlugin {\ntype = volumealsa\n}\nPlugin {\ntype = launchbar \nConfig {\nButton {\nid=lubuntu-logout.desktop\n}\n}\n}";
-				FileUtils.set_contents(file.get_path(), content, content.length);
+				try{FileUtils.set_contents(file.get_path(), content, content.length);}catch(Error e){}
 				system("killall lxpanel");
 				system("lxpanel &");}
 			}
 		if (color.get_text() != ""){
 			var file = File.new_for_path(Environment.get_home_dir()+"/.config/lxpanel/default/panels/panel");
 			if (file.query_exists() == true){
-			file.delete();
-			file.create(0,null);
+			try{file.delete();
+			file.create(0,null);}catch(Error e){}
 			string content = "# lxpanel <profile> config file. Manually editing is not recommended."+
 				"# Use preference dialog in lxpanel to adjust config when you can."+
 					"\nGlobal {\n"+
@@ -154,7 +152,8 @@ namespace LxLauncher.Widgets {
 						"backgroundfile=/usr/share/lxpanel/images/background.png\n"+
 						"iconsize=24\n"+
 					"}\n\nPlugin {\n	\ntype = tray\n	}\nPlugin {\ntype = volumealsa\n}\nPlugin {\ntype = launchbar \nConfig {\nButton {\nid=lubuntu-logout.desktop\n}\n}\n}";
-				FileUtils.set_contents(file.get_path(), content, content.length);
+				try{FileUtils.set_contents(file.get_path(), content, content.length);
+				}catch(Error  e){}
 				system("killall lxpanel");
 				system("lxpanel &");	}
 			}
@@ -283,7 +282,7 @@ namespace LxLauncher.Widgets {
 			option_tab.pack_start(ss,true,false);					
 			option_tab.set_homogeneous(true);
 			Box option_tab1 = new Box(Orientation.VERTICAL,5);			
-			tabs_text = new RadioButton.with_label_from_widget(null,"Text");
+			tabs_text = new RadioButton.with_label(null,"Text");
 			tabs_text.toggled.connect(radio_select);
 			if (settings_manager.option_view_tabs == 0) tabs_text.set_active(true);
 			tabs_icon = new RadioButton.from_widget(tabs_text);
