@@ -41,7 +41,7 @@ namespace LxLauncher.Widgets {
         public void add_to_favourites (Gtk.MenuItem widg) {
             settings_manager.set_string("Favourites", desktop_id.split(".")[0], desktop_id);
             settings_manager.save_changes();
-            //Frontend.append_favourites(); see FavouriteLauncher
+           // main_page.append_favourites(); //see FavouriteLauncher
         }
         
         public Launcher (App app, bool hide_label = false, bool preferred = false) {

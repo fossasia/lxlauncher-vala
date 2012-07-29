@@ -1,4 +1,3 @@
-
 using Gtk;
 using Gdk;
 using LxLauncher.Backend;

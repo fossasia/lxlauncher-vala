@@ -62,14 +62,14 @@ namespace LxLauncher.Config {
 		private string load_font_family(){
 			try{
 				return config.get_string("CSS","font");
-				}catch(Error e){stderr.printf("Error "+e.message);}
+				}catch(Error e){return "";}
 				return "";
 			}
 		
 		private string load_font_color(){
 			try{
 				return config.get_string("CSS","font-color");
-				}catch(Error e){stderr.printf("Error "+e.message);}
+				}catch(Error e){return "";}
 				return "";
 			}
 		private string init_css_style(){
@@ -83,19 +83,16 @@ namespace LxLauncher.Config {
 			if (background != "") 
 				{
 					//if (bg_option == 0) {
-						tmp += "GtkWindow#lxlauncher {background:url('"+background+"'); }\n";
+						tmp += "GtkViewport {background:url('"+background+"'); }\n";
 						//}
 					//else if (bg_option == 1) tmp+="GtkWindow#lxlauncher {background:url('"+background+"') no-repeat;\nbackground-position:center;}\n";
 					//else tmp+="GtkWindow#lxlauncher {background:url('"+background+"') no-repeat ;background-size:100% 100%;}\n";
 				}
-			else tmp+="GtkWindow#lxlauncher {background-image:none;}\n";
-			if (font_family != "") tmp+="GtkWindow#lxlauncher {font:"+font_family+";}\n";
-			//if (font_size != "") tmp+="GtkWindow#lxlauncher {font-size:"+font_size+";}\n";
+			else tmp+="GtkViewport {background-image:none;}\n";
+			if (font_family != "") tmp+="GtkWindow#lxlauncher {font:"+font_family+";}\n";			
 			if (font_color != "") tmp+="GtkWidget {color:"+font_color+";}\n";
-			
-			if (tab_bgcolor != "") tmp+="GtkWindow#lxlauncher {background-color:"+tab_bgcolor+";}\n";
-			//tmp+="\nGtkScrolledWindow, GtkViewport{background:url('/home/x-mario/bg.png') repeat;}";
-			tmp+="\nGtkViewport{background-color:rgba(255,255,255,0);}";
+			if (tab_bgcolor != "") tmp+="GtkViewport {background-color:"+tab_bgcolor+";}\n";			
+			tmp+="\nGtkTreeView{background-color:rgba(0,0,0,0);}";		
 			return tmp;
 			}
         private string[] load_favourites_launchers () {
@@ -180,7 +177,7 @@ namespace LxLauncher.Config {
 				config.set_string("General", "menu", menu_path);
             config.set_integer("Interface", "columns", 9);            
             if (option_view_tabs == -1) config.set_integer("Interface","view",2);else config.set_integer("Interface","view",option_view_tabs);
-            config.set_string("Favourites", "pcmanfm", "pcmanfm.desktop");
+            //config.set_string("Favourites", "pcmanfm", "pcmanfm.desktop");
             if (background != "") config.set_string("CSS","background",background);
             if (font_family != "") config.set_string("CSS","font",font_family);
             //if (font_size != "") config.set_string("CSS","font-size",font_size);
@@ -225,7 +222,7 @@ namespace LxLauncher.Config {
             option_view_tabs = load_option_view();
             //bg_option = load_bg_option();
             //favourites_pos = load_favourites_pos();
-            css_style = init_css_style();//"GtkWindow#lxlauncher {background-image:url('/home/honnguyen/.config/lxlauncher/background.png');}";            
+            css_style = init_css_style();
             string[] raw_launchers = load_favourites_launchers();
             if (raw_launchers.length > 0 && raw_launchers.length != favourites.length) {
                 try{string favourites_tmp = config.get_string("Favourites", raw_launchers[0]);
@@ -233,8 +230,9 @@ namespace LxLauncher.Config {
                     if (raw_launchers[x] != null) {
                         favourites_tmp = string.joinv("|", {favourites_tmp, config.get_string("Favourites", raw_launchers[x])});
                     }
-                }
-                favourites = favourites_tmp.split("|");            
+                }                
+                favourites = favourites_tmp.split("|");  
+                          
             }
                 catch(Error e){stderr.printf("Error "+e.message);}
               }
@@ -274,14 +272,13 @@ namespace LxLauncher.Config {
             Screen screen = Screen.get_default();
             screen_height = screen.get_height();
             screen_width = screen.get_width();
-            background = load_background();
-            //stdout.printf(background);
-            background = "/etc/xdg/lxlauncher/background.png";
-            option_view_tabs = load_option_view();
+            background = load_background();           
+            option_view_tabs = load_option_view();			
             //bg_option = load_bg_option();
             font_family = "";            
             font_color = "";            
             config = new KeyFile();
+            //favourites_pos = load_favourites_pos();
             File dir = File.new_for_path(Environment.get_home_dir()+"/.config/"+"lxlauncher");            
             if (dir.query_exists() == false) { dir.make_directory_with_parents(); }
             file = File.new_for_path(dir.get_path()+"/"+profile+".conf");
@@ -293,10 +290,7 @@ namespace LxLauncher.Config {
                 print_debug("Using "+profile+" profile");
                 config.load_from_file(file.get_path(), 0);
             }
-           /* if (css.query_exists() == false){
-				fill_css(css);
-				//config.load_from_file(css.get_path(), 0);
-				}*/
+          
             if (! compare_arrays(config.get_groups(), groups)) {
                 file.delete();
                 fill_file(file);

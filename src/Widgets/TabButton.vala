@@ -1,4 +1,3 @@
-
 using Gtk;
 using Pango;
 using LxLauncher.Backend;
@@ -17,12 +16,12 @@ namespace LxLauncher.Widgets {
         private void complete (bool tool) {
             can_focus = false;
             name = "tabbutton";
-            Box child_box = new Box(Orientation.HORIZONTAL, 0);            
+            Box child_box = new Box(Orientation.HORIZONTAL, 0);                        
             Image icon_widget = new Image.from_icon_name(icon, IconSize.LARGE_TOOLBAR);
             Label label_widget = new Label(label);
             label_widget.set_ellipsize(EllipsizeMode.END);
             set_tooltip_text(comment);
-            set_mode(false);
+            set_mode(false);            
             // Support icon + label Hon Nguyen           
 			if (settings_manager.option_view_tabs == 0) child_box.pack_start(label_widget, false, false, 0);	
 				else if (settings_manager.option_view_tabs == 1) child_box.pack_start(icon_widget, false, false, 0);

@@ -13,8 +13,7 @@ namespace LxLauncher.Widgets {
         public void append_launcher (App item) {            
             if (children == n_columns) {
                 children = 0;
-                chil = new Box(Orientation.HORIZONTAL, 5);                
-				
+                chil = new Box(Orientation.HORIZONTAL, 5);                				
                 chil.homogeneous = true;                
                 pack_end(chil, true, false, 0);
                 //scroll.add(chil);

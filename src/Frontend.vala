@@ -52,7 +52,12 @@ namespace LxLauncher.Main {
 		
         public void setup_ui () {
             main = new Box(Orientation.VERTICAL, 5);
-            main.set_border_width(50);            
+            //main.set_border_width(40);                                               
+            
+            //main.set_margin_bottom(40);
+            //main.set_margin_left(50);
+            //main.set_margin_right(50);
+            
             main_2 = new Box(Orientation.VERTICAL, 5);                      
             //Box favourite_box_center = new Box(Orientation.VERTICAL, 0);
             
@@ -62,27 +67,33 @@ namespace LxLauncher.Main {
             Box tab_box_vertical = new Box(Orientation.VERTICAL, 0);
             
             Box tab_box_2 = new Box(Orientation.HORIZONTAL, 5);
+            
             tab_box = new Box(Orientation.HORIZONTAL, 5);
             
             button_table = new Notebook();
             button_table.show_tabs = false;
-            button_table.show_border = false;
-            button_table.scrollable = true;
-            //searchview = new SearchView();            
+            button_table.show_border = false;          
+            //searchview = new SearchView();                    
             
-            tab_box_vertical.pack_start(tab_box, true, false, 0);
-            //tab_box_2.pack_start(searchentry, false, false, 0);
+            ;               
+            //tab_box_2.pack_start(searchentry, false, false, 0);            
+            tab_box_vertical.pack_start(tab_box, true, true, 0);                                
             tab_box_2.pack_start(tab_box_vertical, true, true, 0);
-            //tab_box_2.name = "tabbox";
+            
             
             //favourite_box_center.pack_start(favourite_box, true, false, 0);            
             			
             //main_2.pack_start(favourite_box, false, false, 0); 
             
-            main_2.pack_start(button_table, true, true, 0);
+            main_2.pack_start(button_table, true, true, 0);            
             //main_2.pack_start(searchview, true, true, 0);
-            main.pack_start(tab_box_2, false, false, 0);
-            main.pack_start(main_2, true, true, 0);
+           
+            
+            
+            //main.pack_start(se,false,false,0);
+            main.set_homogeneous(false);
+            main.pack_start(tab_box_2, false, false, 0);                          
+            main.pack_start(main_2, true, true, 0);            
             add(main);
             category_button = null;
             tabs = 0;          
@@ -99,7 +110,7 @@ namespace LxLauncher.Main {
                 tab_box.set_sensitive(false);
                 searchview.set_visible(true);
                 favourite_box.set_visible(false);
-                //button_table.set_visible(false);
+               // button_table.set_visible(false);
                 foreach (Category categ in apps_db.categories) {
                     foreach (App app in apps_db.apps_by_category[categ]) {
                         if ((filter in app.name || filter in app.comment || filter in app.exec) && ! (app.desktop_id in searchview.added_items)) {
@@ -108,40 +119,7 @@ namespace LxLauncher.Main {
                     }
                 }
             }
-        }
-        
-        /*public void move_favourites () {
-            /*switch (settings_manager.favourites_pos) {
-                case 0:
-                    ((Box)favourite_box.get_parent()).set_orientation(Orientation.HORIZONTAL);
-                    favourite_box.set_orientation(Orientation.HORIZONTAL);
-                    main_2.reorder_child(favourite_box.get_parent(), 0);
-                    main_2.set_orientation(Orientation.VERTICAL);
-                    break;
-                case 1:*/
-					
-                    /*((Box)favourite_box.get_parent()).set_orientation(Orientation.VERTICAL);
-                    favourite_box.set_orientation(Orientation.VERTICAL);
-                    main_2.reorder_child(favourite_box.get_parent(), 0);
-                    main_2.set_orientation(Orientation.HORIZONTAL);
-                    
-               /*     break;
-                case 2:
-                    ((Box)favourite_box.get_parent()).set_orientation(Orientation.HORIZONTAL);
-                    favourite_box.set_orientation(Orientation.HORIZONTAL);
-                    main_2.reorder_child(favourite_box.get_parent(), -1);
-                    main_2.set_orientation(Orientation.VERTICAL);
-                    break;
-                case 3:
-                    ((Box)favourite_box.get_parent()).set_orientation(Orientation.VERTICAL);
-                    favourite_box.set_orientation(Orientation.VERTICAL);
-                    main_2.reorder_child(favourite_box.get_parent(), 0);
-                    main_2.set_orientation(Orientation.HORIZONTAL);
-                    break;
-                default:
-                    break;
-            }*/
-        //}
+        }          
         
         public void append_favourite (App favourite) {
             favourite_box.add_favourite(favourite);
@@ -175,11 +153,9 @@ namespace LxLauncher.Main {
                 table.append_launcher(app);
                 print_debug("Appending "+app.name);
             }
-            table.complete_grid();
-            
+            table.complete_grid();            
             Box table_box = new Box(Orientation.VERTICAL, 0);
-            var scroll = new ScrolledWindow(null,null);   
-            //var viewport = new Viewport();        
+            var scroll = new ScrolledWindow(null,null);         
             scroll.set_placement(Gtk.CornerType.TOP_LEFT);
             scroll.add_with_viewport(table);            
             table_box.pack_start(scroll, true, true, 0);
@@ -192,7 +168,8 @@ namespace LxLauncher.Main {
             category_button = new TabButton(category_button, item, tabs);
                                     
             (Button) category_button.clicked.connect(change_page);
-            
+            Separator se = new Separator(Orientation.VERTICAL);
+            tab_box.pack_start(se,false,false,0);
             tab_box.pack_start(category_button, false, false, 0);
             category_button.show_all();
             tabs++;
@@ -213,78 +190,60 @@ namespace LxLauncher.Main {
             favourite_box.foreach((widget) => {
                 widget.destroy();
             });
-        }
-        public void preferences_setting(){			
-			Gtk.Window pre = new PreferencesSetting();
-			pre.show_all();
-			}	
+        }       
         public void setup_launchers () {
             clear_all();
             apps_db.get_applications();
             //home_table = new LauncherGrid(settings_manager.columns);                                   
             Box home_table_box = new Box(Orientation.VERTICAL, 0);
-            home_box = new Box (Orientation.VERTICAL,0);          
-          
-            home_table_box.expand = true;            
+            home_box = new Box (Orientation.VERTICAL,0);                    
+            home_table_box.expand = true;           
+            var scroll = new ScrolledWindow(null,null);    
+            searchentry.set_margin_left(20);
+            searchentry.set_margin_right(20);
+            searchentry.set_margin_top(10);
             home_table_box.pack_start(searchentry,false,false,0);
             home_table_box.pack_start(home_box,true,true,0);
-            favourite_box = new FavouriteBar();           
-            favourite_box.set_orientation(Orientation.HORIZONTAL);           
-            home_box.pack_start(favourite_box, false, false, 0);  
-            searchview = new SearchView();                         
+            favourite_box = new FavouriteBar();             
+            favourite_box.set_orientation(Orientation.HORIZONTAL);                       
+            home_box.pack_start(favourite_box, false, false, 0);
+            //if (settings_manager.favourites_pos == 0) favourite_box.set_visible(false);  else favourite_box.set_visible(true);
+            searchview = new SearchView();    
+            searchview.set_margin_top(10);                     
+            searchview.set_margin_bottom(10);   
+            searchview.set_margin_right(20);
+            searchview.set_margin_left(20);
             searchview.set_size_request(searchview.width_request,button_table.height_request);
-            home_box.pack_start(searchview,true,true,0);                               
-            button_table.append_page(home_table_box, null);
+            home_box.pack_start(searchview,true,true,0);  
+            scroll.add_with_viewport(home_table_box);                                
+            button_table.append_page(scroll, null);
             home_table_box.show_all();            
-            category_button = new TabButton.custom(category_button,"folder-home","Home","Home Tab",0); 
+            category_button = new TabButton.custom(category_button,"folder-home","Home","Home Tab",0);   
+            Separator se = new Separator(Orientation.VERTICAL);
+            tab_box.pack_start(se,false,false,0);         
             tab_box.pack_start(category_button,false,false,0);
             (Button) category_button.clicked.connect(change_page);
             category_button.show_all();
             tabs++;                     
             foreach (Category categ in apps_db.categories) {
                 foreach_category(categ);
-            }
-             //home_table.complete_grid();
-            //preferences_box = new PreferencesBox();
-            //button_table.append_page(preferences_box, null);
-            //preferences_box.show_all();
-            
-            //TabButton preferences = new TabButton.with_icon(category_button, Stock.PREFERENCES, tabs);
-            PreferencesButton preferences = new PreferencesButton(Stock.PREFERENCES);               
-            //Button preferences = new Button.with_label("Preferences");
-            tab_box.pack_end(preferences, false, false, 0);
-            (Button)preferences.clicked.connect(preferences_setting);
-            preferences.show_all();
-            //move_favourites();
+            }      
         }        
-        public void settings_changed_manager (ParamSpec param) {
-            print_debug("Settings changed: "+param.name);
-            switch (param.name) {
-                case "favourites-pos":
-                    //move_favourites();
-                    break;
-                case "favourites":
+        public void settings_changed_manager (ParamSpec param) { 						
                     favourite_box.foreach((widget) => {
                         widget.destroy();
                     });
-                    append_favourites();
-                    break;
-                default:
-                    break;
-            }
+                    append_favourites();                             
         }
         public void load_style(){
 			stylecontext.reset_widgets(scr);
-			stylecontext.add_provider_for_screen(scr,css_style, 800);
-			//stderr.printf(settings_manager.css_style);
+			stylecontext.add_provider_for_screen(scr,css_style, 800);			
 			try{css_style.load_from_data(settings_manager.css_style,-1);	}catch(Error e){}
 			}       
-        public Frontend () {
-				
+        public Frontend () {			
             apps_db = new AppDatabase(settings_manager.menu_path);
             set_title("LxLauncher");                       
-            set_position(WindowPosition.CENTER);
-            //destroy.connect(Gtk.main_quit);
+            set_position(WindowPosition.CENTER);            
             name = "lxlauncher";
             css_style = new CssProvider();  			                    
             stylecontext = new StyleContext();	
@@ -300,7 +259,7 @@ namespace LxLauncher.Main {
             //show_all();
             setup_launchers();
             load_style();
-			// searchview.set_visible(false);                              
+			searchview.set_visible(false);                              
             settings_manager.notify.connect(settings_changed_manager);
             apps_db.cache.add_reload_notify((Func) setup_launchers);
           
@@ -333,11 +292,11 @@ int main (string[] args) {
         return 1;
     }
     LxLauncher.Config.init();    
-    system("killall lxpanel");    
-    system("lxpanel &");
+    //system("killall lxpanel");    
+    //system("lxpanel &");
     LxLauncher.Main.init();
     LxLauncher.Main.main_page.show_all();
-    LxLauncher.Main.main_page.searchview.set_visible(false);
+    LxLauncher.Main.main_page.searchview.set_visible(false);    
     Gtk.main();
     return 0;
 }
