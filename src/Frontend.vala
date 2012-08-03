@@ -227,8 +227,33 @@ namespace LxLauncher.Main {
             tabs++;                     
             foreach (Category categ in apps_db.categories) {
                 foreach_category(categ);
-            }      
-        }        
+            }
+            Viewport utils_port = new Viewport(null,null);
+            Box utils_box = new Box(Orientation.HORIZONTAL,0);
+            utils_port.name = "utils";
+            Button wifi = new Button(); 
+            wifi.set_image(new Image.from_icon_name("gtk-network",IconSize.LARGE_TOOLBAR));
+            wifi.clicked.connect(()=>{
+				system("wicd-client -n");
+				});
+            Button shutdown = new Button();
+            shutdown.set_image(new Image.from_icon_name("system-shutdown",IconSize.LARGE_TOOLBAR));
+            shutdown.clicked.connect(() => {
+				
+				});
+            VolumeButton volume = new VolumeButton();
+            volume.set_value(0.5);                        
+            volume.value_changed.connect(()=>{
+				string command = "amixer set Master "+ (volume.get_value()*100).to_string();			
+				system(command +"% ");
+				});
+            utils_box.pack_start(wifi,false,false,0);
+            utils_box.pack_start(volume,false,false,0);
+            utils_box.pack_start(shutdown,false,false,0);
+            utils_port.add(utils_box);
+            tab_box.pack_start(utils_port,true,false,0);
+        }         
+        
         public void settings_changed_manager (ParamSpec param) { 						
                     favourite_box.foreach((widget) => {
                         widget.destroy();

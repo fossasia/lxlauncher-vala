@@ -92,7 +92,7 @@ namespace LxLauncher.Config {
 			if (font_family != "") tmp+="GtkWindow#lxlauncher {font:"+font_family+";}\n";			
 			if (font_color != "") tmp+="GtkWidget {color:"+font_color+";}\n";
 			if (tab_bgcolor != "") tmp+="GtkViewport {background-color:"+tab_bgcolor+";}\n";			
-			tmp+="\nGtkTreeView{background-color:rgba(0,0,0,0);}";		
+			tmp+="\nGtkTreeView{background-color:rgba(0,0,0,0.5);}";			
 			return tmp;
 			}
         private string[] load_favourites_launchers () {
