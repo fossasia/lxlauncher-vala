@@ -91,7 +91,7 @@ public class DesktopSetting: Gtk.Window
 	public void save_config(){		
 		settings_manager.update();
 		system("killall lxlauncher");
-		system("./lxlauncher &");
+		system("lxlauncher &");
 		}
 	public void cancel_config(){		
 		exit(0);

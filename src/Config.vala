@@ -272,7 +272,7 @@ namespace LxLauncher.Config {
             Screen screen = Screen.get_default();
             screen_height = screen.get_height();
             screen_width = screen.get_width();
-            background = load_background();           
+                       
             option_view_tabs = load_option_view();			
             //bg_option = load_bg_option();
             font_family = "";            
@@ -284,6 +284,7 @@ namespace LxLauncher.Config {
             file = File.new_for_path(dir.get_path()+"/"+profile+".conf");
             //css = File.new_for_path(dir.get_path()+"/lxlauncher.css");
             if (file.query_exists() == false) {
+				background = "/etc/xdg/lxlauncher/background.png";
                 fill_file(file);
                 config.load_from_file(file.get_path(), 0);
             } else {

@@ -239,7 +239,7 @@ namespace LxLauncher.Main {
             Button shutdown = new Button();
             shutdown.set_image(new Image.from_icon_name("system-shutdown",IconSize.LARGE_TOOLBAR));
             shutdown.clicked.connect(() => {
-				
+				system("lxsession-logout --banner '/etc/xdg/lxlauncher/logout-banner.png' --side=top");
 				});
             VolumeButton volume = new VolumeButton();
             volume.set_value(0.5);                        
